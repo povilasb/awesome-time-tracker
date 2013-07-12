@@ -1,0 +1,4 @@
+How to install Awesome Time Tracker?
+===================================
+
+1. execute make, which installs Time Tracker to ~/.config/awesome/TimeTracker
