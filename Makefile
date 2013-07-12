@@ -3,8 +3,9 @@
 AWESOME_CONFIG_DIR = ~/.config/awesome
 INSTALL_PATH = $(AWESOME_CONFIG_DIR)/TimeTracker
 
-CLASS_TIME_TRACKER = TimeTracker.lua
-CLASS_ACTIVITY = Activity.lua
+SRC_DIR = src
+CLASS_TIME_TRACKER = $(SRC_DIR)/TimeTracker.lua
+CLASS_ACTIVITY = $(SRC_DIR)/Activity.lua
 
 all: install
 
