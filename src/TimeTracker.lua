@@ -81,6 +81,7 @@ end
 function TimeTracker:stopCurrentActivity()
 	if self.currentActivity then
 		self.currentActivity:stop()
+		self:writeToDb(self.currentActivity);
 		self.currentActivity = nil
 	end
 end
