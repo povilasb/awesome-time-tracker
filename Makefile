@@ -1,16 +1,19 @@
-.PHONY: all install uninstall
-
 AWESOME_CONFIG_DIR = ~/.config/awesome
-INSTALL_PATH = $(AWESOME_CONFIG_DIR)/TimeTracker
+INSTALL_PATH = $(AWESOME_CONFIG_DIR)
 
 SRC_DIR = src
-CLASS_TIME_TRACKER = $(SRC_DIR)/TimeTracker.lua
+CLASS_TIME_TRACKER = $(SRC_DIR)/time_tracker.lua
+
 
 all: install
+.PHONY: all
+
 
 install:
-	mkdir -p $(INSTALL_PATH)
 	install --mode=644 $(CLASS_TIME_TRACKER) $(INSTALL_PATH)
+.PHONY: install
+
 
 uninstall:
 	rm -rf $(INSTALL_PATH)
+.PHONY: uninstall
