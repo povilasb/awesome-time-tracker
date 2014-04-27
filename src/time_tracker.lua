@@ -6,21 +6,21 @@ require "awful"
 local qmonix = require "qmonix"
 
 
-local TimeTracker = {}
+local time_tracker = {}
 
 
 ---
--- Creates new TimeTracker object with the specified Qmonix server URI, e.g.
+-- Creates new time_tracker object with the specified Qmonix server URI, e.g.
 -- "http://localhost:8337"
 --
 -- @param {string} qmonix_uri qmonix server URI.
--- @return {table} TimeTracker object.
+-- @return {table} time_tracker object.
 ---
-function TimeTracker.create(qmonix_uri)
+function time_tracker.create(qmonix_uri)
 	local retval = {}
 
 	setmetatable(retval, {
-		["__index"] = TimeTracker
+		["__index"] = time_tracker
 	})
 
 	retval.qmonix_tracker = qmonix.new_http_tracker(qmonix_uri .. "/event/")
@@ -35,7 +35,7 @@ end
 --
 -- @param {string} activity_name string identifying activity.
 ---
-function TimeTracker:setActivity(activity_name)
+function time_tracker:set_activity(activity_name)
 	if self.current_activity then
 		self.current_activity:fire_dispatch()
 	end
@@ -48,7 +48,7 @@ end
 ---
 -- Stops the activity that is currently being tracked.
 ---
-function TimeTracker:stopCurrentActivity()
+function time_tracker:stop_current_activity()
 	if self.current_activity then
 		self.current_activity:fire_dispatch()
 		self.current_activity = nil
@@ -56,4 +56,4 @@ function TimeTracker:stopCurrentActivity()
 end
 
 
-return TimeTracker
+return time_tracker
