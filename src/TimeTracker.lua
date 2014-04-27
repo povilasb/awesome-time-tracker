@@ -3,59 +3,31 @@
 ---
 
 require "awful"
-local Activity = require "TimeTracker.Activity"
+local qmonix = require "qmonix"
 
--- PRIVATE
 
 local TimeTracker = {}
 
----
--- Checks if time tracker was initialised. If it was not, raises error.
----
-function TimeTracker:validateInit()
-	if not self.config then
-		error("Awesome Time Tracker was not initialised")
-	end
-end
 
 ---
--- Appends specified activity info to db.
+-- Creates new TimeTracker object with the specified Qmonix server URI, e.g.
+-- "http://localhost:8337"
 --
--- @param {Activity} activity Activity object whose info will be written to
---	database file.
+-- @param {string} qmonix_uri qmonix server URI.
+-- @return {table} TimeTracker object.
 ---
-function TimeTracker:writeToDb(activity)
-	local dbFile = self.config.dbFilePath
+function TimeTracker.create(qmonix_uri)
+	local retval = {}
 
-	f = io.open(dbFile, "a")
-	f:write(activity:toCsv(), "\n")
-	f:close()
+	setmetatable(retval, {
+		["__index"] = TimeTracker
+	})
+
+	retval.qmonix_tracker = qmonix.new_http_tracker(qmonix_uri .. "/event/")
+
+	return retval
 end
 
--- PUBLIC
-
----
--- Initialises time tracker with a specified database file path. This must
--- be invoked before starting to use time tracker. If it is not, the error
--- will be raised.
---
--- @param {string} dbFilePath database file name path. This is the file that
---	activity data will be stored.
----
-function TimeTracker:init(dbFilePath)
-	self.config = {}
-	self.config.dbFilePath = dbFilePath
-
-	self.currentActivity = nil
-
-	-- if DB file does not exist yet, create it and write header to it
-	if not awful.util.file_readable(self.config.dbFilePath) then
-		local header = "Activity name;Start time;Stop time"
-		f = io.open(self.config.dbFilePath, "w")
-		f:write(header, "\n")
-		f:close()
-	end
-end
 
 ---
 -- Starts tracking the specified activity. If another activity was already
@@ -64,27 +36,24 @@ end
 -- @param {string} activity_name string identifying activity.
 ---
 function TimeTracker:setActivity(activity_name)
-	self:validateInit()
-
-	if self.currentActivity then
-		self.currentActivity:stop()
-		self:writeToDb(self.currentActivity);
+	if self.current_activity then
+		self.current_activity:fire_dispatch()
 	end
 
-	self.currentActivity = Activity:new(activity_name)
-	self.currentActivity:start()
+	self.current_activity = self.qmonix_tracker:start("time_tracker/"
+		.. activity_name)
 end
+
 
 ---
 -- Stops the activity that is currently being tracked.
 ---
 function TimeTracker:stopCurrentActivity()
-	if self.currentActivity then
-		self.currentActivity:stop()
-		self:writeToDb(self.currentActivity);
-		self.currentActivity = nil
+	if self.current_activity then
+		self.current_activity:fire_dispatch()
+		self.current_activity = nil
 	end
 end
 
-return TimeTracker
 
+return TimeTracker
