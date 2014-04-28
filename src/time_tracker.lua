@@ -2,8 +2,7 @@
 -- Awesome Time Tracker
 ---
 
-require "awful"
-local qmonix = require "qmonix"
+local qmonix = require "qmonix.qmonix"
 
 
 local time_tracker = {}
