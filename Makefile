@@ -1,19 +1,26 @@
-AWESOME_CONFIG_DIR = ~/.config/awesome
-INSTALL_PATH = $(AWESOME_CONFIG_DIR)
+INSTALL_PATH ?= ~/.config/awesome
 
 SRC_DIR = src
-CLASS_TIME_TRACKER = $(SRC_DIR)/time_tracker.lua
+BUILD_DIR = build
 
 
-all: install
+all: build
 .PHONY: all
 
 
+build:
+	make -C lib/qmonix-client
+	mkdir -p $(BUILD_DIR)
+	cp -r lib/qmonix-client/build/* $(BUILD_DIR)
+	cp -r $(SRC_DIR)/* $(BUILD_DIR)
+.PHONY: build
+
+
+clean:
+	rm -rf $(BUILD_DIR)
+.PHONY: clean
+
+
 install:
-	install --mode=644 $(CLASS_TIME_TRACKER) $(INSTALL_PATH)
+	cp -r $(BUILD_DIR)/* $(INSTALL_PATH)/
 .PHONY: install
-
-
-uninstall:
-	rm -rf $(INSTALL_PATH)
-.PHONY: uninstall
