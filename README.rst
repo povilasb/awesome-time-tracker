@@ -13,6 +13,7 @@ Awesome Time Tracking tool for awesome window manager.
    and allows us to collect/store our task data with no hustle.
 
 .. image:: res/img/qmonix.png
+        :height: 100px
 
 
 Dependencies
