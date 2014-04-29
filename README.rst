@@ -12,6 +12,8 @@ Awesome Time Tracking tool for awesome window manager.
 2. Reports are powered by Qmonix analytics SDK, so this gives us nice charts
    and allows us to collect/store our task data with no hustle.
 
+.. image:: res/image/qmonix.png
+
 
 Dependencies
 ============
@@ -21,7 +23,6 @@ Dependencies
 .. code-block:: bash
 
         $ git submodule update --init
-
 
 Installation
 ============
