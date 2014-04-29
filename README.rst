@@ -10,6 +10,16 @@ Awesome Time Tracking tool for awesome window manager.
    and allows us to collect/store our task data with no hustle.
 
 
+Dependencies
+============
+
+1. Qmonix Lua SDK [#f3]_. To retrieve it simply type in Your terminal:
+
+.. code-block:: bash
+
+        $ git submodule update --init
+
+
 Installation
 ============
 
@@ -94,3 +104,4 @@ to find Your tasks in Qmonix dashboard.
 
 .. [#f1] http://awesome.naquadah.org/doc/api/modules/awful.widget.prompt.html
 .. [#f2] http://qmonix.com
+.. [#f3] https://github.com/qmonix/client-lua
