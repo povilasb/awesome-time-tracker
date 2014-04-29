@@ -6,6 +6,9 @@ Awesome Time Tracking tool for awesome window manager.
 
 1. Using Awesome WM **prompt** widget You are able to rapidly enter the task
    You're currently working on [#f1]_.
+
+.. image:: example/start_task.png
+
 2. Reports are powered by Qmonix analytics SDK, so this gives us nice charts
    and allows us to collect/store our task data with no hustle.
 
