@@ -2,6 +2,8 @@
 Introduction
 ============
 
+.. image:: http://demo.qmonix.com/event/awesome_time_tracker/github_view.png
+
 Awesome Time Tracking tool for awesome window manager.
 
 1. Using Awesome WM **prompt** widget You are able to rapidly enter the task
