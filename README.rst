@@ -106,6 +106,12 @@ be prompted with "Start new task:". Press **ctrl+modkey+s** and open
 to find Your tasks in Qmonix dashboard.
 
 
+TODO
+====
+
+[ ] Implement Chromium extension.
+
+
 .. rubric:: References
 
 .. [#f1] http://awesome.naquadah.org/doc/api/modules/awful.widget.prompt.html
