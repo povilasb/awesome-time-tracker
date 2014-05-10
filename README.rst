@@ -59,17 +59,11 @@ When You have installed time tracker files to the right location, let's
 enable some conveniences key bindings in Awesome WM. We'll be using to
 key bindings:
 
-1. ctrl+modkey+a - displays the prompt widget where You can type the
+1. cttrl+alt+a - displays the prompt widget where You can type the
    name of new task/activity.
-2. ctrl+modkey+s - stops the task, if one was started. At this point task
+2. ctrl+alt+s - stops the task, if one was started. At this point task
    duration event is sent to Qmonix server.
-
-.. info::
-
-        Comment in Awesome WM config file rc.lua:
-
-        -- Default modkey.
-        -- Usually, Mod4 is the key with a logo between Control and Alt.
+3. ctrl+alt+c - display currently started task.
 
 You must modify Your **rc.lua** config file to enable new key bindings:
 
@@ -84,14 +78,21 @@ You must modify Your **rc.lua** config file to enable new key bindings:
         globalkeys = awful.util.table.join(
                 ...
 
-                awful.key({modkey, "Control"}, "s", function () time_tracker:stop_current_activity()   end),
-                awful.key({ modkey, "Control" }, "a",
-                        function ()
-                                awful.prompt.run({ prompt = "Start new task: " },
-                                mypromptbox[mouse.screen].widget,
-                                time_tracker_set_activity, nil,
-                                awful.util.getdir("cache") .. "/history_eval")
-                        end),
+                -- Awesome Time Tracker.
+                awful.key({"Mod1", "Control"}, "s", function ()
+                        time_tracker:stop_current_activity()
+                end),
+
+                awful.key({"Mod1", "Control"}, "c", function ()
+                        time_tracker:show_current_activity()
+                end),
+
+                awful.key({"Mod1", "Control" }, "a", function ()
+                        awful.prompt.run({ prompt = "Start new task: " },
+                        mypromptbox[mouse.screen].widget,
+                        time_tracker_set_activity, nil,
+                        awful.util.getdir("cache") .. "/history_eval")
+                end),
 
                ...
        )
@@ -100,10 +101,11 @@ You must modify Your **rc.lua** config file to enable new key bindings:
 That's it. Restart Your Awesome WM to apply the config changes and You should
 be all set.
 
-To test if everything works fine, press **ctrl+modkey+a** and You should
-be prompted with "Start new task:". Press **ctrl+modkey+s** and open
+To test if everything works fine, press **ctrl+alt+a** and You should
+be prompted with "Start new task:". Press **ctrl+alt+s** and open
 **http://localhost:8337** in Your Web browser. Now You should be able
-to find Your tasks in Qmonix dashboard.
+to find Your tasks in Qmonix dashboardl. Press **ctrl+alt+c** to see the
+name of currently started task.
 
 
 TODO
