@@ -1,8 +1,9 @@
 ---
--- Awesome Time Tracker
+-- Awesome Time Tracker.
 ---
 
 local qmonix = require "qmonix.qmonix"
+require("naughty")
 
 
 local time_tracker = {}
@@ -41,6 +42,8 @@ function time_tracker:set_activity(activity_name)
 
 	self.current_activity = self.qmonix_tracker:start("time_tracker/"
 		.. activity_name)
+
+	self.show_message("Task started: " .. activity_name)
 end
 
 
@@ -50,8 +53,37 @@ end
 function time_tracker:stop_current_activity()
 	if self.current_activity then
 		self.current_activity:fire_dispatch()
+
+		self.show_message("Task stopped : "
+			.. self.current_activity.tag)
+
 		self.current_activity = nil
 	end
+end
+
+
+---
+-- Shows active task name.
+---
+function time_tracker:show_current_activity()
+	if self.current_activity then
+		self.show_message("Active task : "
+			.. self.current_activity.tag)
+	else
+		self.show_message("No active tasks.")
+	end
+end
+
+
+---
+-- Displays message with the specified text.
+---
+function time_tracker.show_message(message)
+	naughty.notify({title = 'Awesome time tracker',
+		text = message,
+		timeout = 3,
+		screen = mouse.screen
+	})
 end
 
 
