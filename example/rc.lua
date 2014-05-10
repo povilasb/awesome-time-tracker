@@ -10,6 +10,7 @@ require("naughty")
 local awesome_time_tracker = require "time_tracker"
 local time_tracker = awesome_time_tracker.create("http://localhost:8337")
 
+
 function time_tracker_set_activity(activity)
 	time_tracker:set_activity(activity)
 end
@@ -255,7 +256,23 @@ globalkeys = awful.util.table.join(
 	awful.key({ modkey,		  }, "F1",	   function () awful.screen.focus(1)   end),
 	awful.key({ modkey,		  }, "F2",	   function () awful.screen.focus(2)   end),
 
-	awful.key({modkey, "Control"}, "s", function () time_tracker:stop_current_activity()   end),
+
+	-- Awesome Time Tracker.
+	awful.key({"Mod1", "Control"}, "s", function ()
+		time_tracker:stop_current_activity()
+	end),
+
+	awful.key({"Mod1", "Control"}, "c", function ()
+		time_tracker:show_current_activity()
+	end),
+
+	awful.key({"Mod1", "Control" }, "a", function ()
+		awful.prompt.run({ prompt = "Start new task: " },
+		mypromptbox[mouse.screen].widget,
+		time_tracker_set_activity, nil,
+		awful.util.getdir("cache") .. "/history_eval")
+	end),
+
 
 	-- Prompt
 	awful.key({ modkey },		 "r",	  function () mypromptbox[mouse.screen]:run() end),
@@ -268,13 +285,7 @@ globalkeys = awful.util.table.join(
 		  awful.util.getdir("cache") .. "/history_eval")
 		  end),
 
-	awful.key({ modkey, "Control" }, "a",
-		function ()
-			awful.prompt.run({ prompt = "Start new activity: " },
-			mypromptbox[mouse.screen].widget,
-			time_tracker_set_activity, nil,
-			awful.util.getdir("cache") .. "/history_eval")
-		end)
+	awful.key({"Mod1", "Shift"}, "Return", lang.switch)
 )
 
 clientkeys = awful.util.table.join(
